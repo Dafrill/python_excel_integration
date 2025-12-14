@@ -1,0 +1,113 @@
+INSTRUKCJA
+
+  
+
+1. Kliknij guzik 'Insert excel file'
+2. Zaalacz plik excela (*.xlsx *.xls lub  *.xlsm)
+3. Wybierz arkusz (jesli wybrany arkusz byl juz otwarty przed uruchomieniem programu, arkusz nie wyskoczy jako nowe okno, tylko pojawi sie na pasku bocznym)
+4. Zaznacz zakres komorek, dla ktorych chcesz wykonac obliczenia
+5. Zamknij okno excela
+6. Kliknij 'Zatwierdz'
+6.2  W oknie GUI i w konsoli pokaze sie wynik obliczen
+7. Zeby zakonczyc dzialanie programu, kliknij 'Wylacz program' na oknie z wynikiem
+
+Opis algorytmu
+Dla zaznaczonego zestawu liczb program:
+========================================================================================================================
+window()
+Cel: Glowne okno startowe aplikacji.
+
+Algorytm:
+
+Ustaw tytul okna.
+
+Dodaj przycisk „Insert Excel file”.
+
+Po kliknieciu przycisku wywolaj insert_file().
+
+Uruchom petle glowna Tkinter.
+========================================================================================================================
+get_sheet_index(sheets, sheet_name)
+Cel: Znajduje indeks arkusza po nazwie.
+
+Algorytm:
+
+Iteruj po slowniku sheets.
+
+Jesli nazwa pasuje – zwroc indeks.
+
+W przeciwnym wypadku – zwroc None.
+========================================================================================================================
+add_combobox(root, options)
+Cel: Tworzy Combobox do wyboru arkusza i obsluguje dalsze dzialania.
+
+Algorytm:
+
+Wyswietl Combobox z nazwami arkuszy.
+
+Po wyborze arkusza – aktywuj Excel:
+
+Otworz wskazany plik Excel.
+
+Aktywuj wybrany arkusz.
+
+Sledz zaznaczenie komorek przez uzytkownika.
+
+Gdy zaznaczenie sie zmieni:
+
+Zapisz wartosci liczbowe.
+
+Pokaz przycisk „Zatwierdz”.
+
+Po zatwierdzeniu:
+
+Oblicz wyniki i wyswietl je w nowym oknie.
+========================================================================================================================
+insert_file()
+Cel: Obsluguje wybor pliku Excel.
+
+Algorytm:
+
+Otworz okno dialogowe wyboru pliku (filedialog.askopenfilename).
+
+Uruchom Excel przez win32com.client.
+
+Otworz plik i pobierz liste arkuszy.
+
+Wyswietl nowe okno z Combobox – przekazujac liste arkuszy.
+
+Czekaj na wybor – po jego dokonaniu:
+
+Excel zostaje zamkniety.
+========================================================================================================================
+ExcelEventHandler.OnSheetSelectionChange
+Cel: Obsluguje zdarzenia zmiany zaznaczenia w Excelu.
+
+Algorytm:
+
+Po kazdej zmianie zaznaczenia – zwraca adres komorek.
+========================================================================================================================
+START
+ ↓
+window() → insert_file()
+                   ↓
+              add_combobox()
+                   ↓
+        (wybor arkusza + aktywacja Excela)
+                   ↓
+     uzytkownik zaznacza dane w Excelu
+                   ↓
+      analiza danych: oblicz() → mediana() + srednia() + odchylenie()
+                   ↓
+        wynik wyswietlany w oknie koncowym
+
+========================================================================================================================
+CZŁONKOWIE ZESPOŁU:
+    Magdalena Tałaj
+    Viktoria Toman
+
+    ZAKRES WYKONANEJ PRACY:
+    Viktoria: funkcje mediana, srednia, odchylenie, oblicz, range_is_chosen() (część w on_select, która wykorzystuje oblicz),
+              Ogólna obsługa wyniku: tworzenie okna wynikowego (result_window)
+    Magda: click_fun, window(), get_sheet_index(sheets, sheet_name), add_combobox(root, options), insert_file(), ExcelEventHandler (klasa),
+                     on_select(event) – całość poza range_is_chosen(), Obsługa Excela przez win32com.client, Uruchomienie aplikacji: if __name__ == "__main__": window()

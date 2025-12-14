@@ -1,0 +1,4 @@
+#Pobrać biblioteki:
+
+
+pywin32
