@@ -42,17 +42,17 @@ def click_fun(wn, _ml):
         top.grid_columnconfigure(i, weight=1)
 
     # PRZYCISKI GÓRNE
-    ttk.Button(top, text="Wykonaj obliczenia", width=18, style="My.TButton", command=lambda: window()).grid(row=1, column=0, **grid_opt)
+    ttk.Button(top, text="Perform calculations", width=18, style="My.TButton", command=lambda: window()).grid(row=1, column=0, **grid_opt)
 
-    ttk.Button(top, text="O programie", width=18, style="My.TButton", command=lambda: messagebox.showinfo("Info", "Twórcy projektu: Magdalena Tałaj && Viktoria Toman")).grid(row=2, column=1, pady=10)
-    ttk.Button(top, text="Zamknij", width=18, style="My.TButton", command=top.destroy).grid(row=2, column=2, pady=10)
+    ttk.Button(top, text="About the programme", width=18, style="My.TButton", command=lambda: messagebox.showinfo("Info", "Authors: Magdalena Tałaj && Viktoria Toman")).grid(row=2, column=1, pady=10)
+    ttk.Button(top, text="Close", width=18, style="My.TButton", command=top.destroy).grid(row=2, column=2, pady=10)
 
     top.bind("<Escape>", lambda e: top.destroy())
 
 def mediana(lista):
     n = len(lista)
     if n==0:
-        raise ValueError("lista nie może być pusta")
+        raise ValueError("The list cannot be empty")
     lista.sort()
     if n%2==0:
         m=((lista[n//2-1])+(lista[(n)//2]))/2.0
@@ -80,7 +80,7 @@ def oblicz(lista):
     wynik1 = mediana(lista)
     wynik2 = srednia(lista)
     wynik3 = odchylenie(lista)
-    return f"mediana: {wynik1:.2f}\nsrednia: {wynik2:.2f}\nodchylenie standardowe: {wynik3:.2f}"
+    return f"median: {wynik1:.2f}\naverage: {wynik2:.2f}\nstandard deviation: {wynik3:.2f}"
 
 
 def window():
@@ -110,7 +110,7 @@ def add_combobox(root, options):
     combobox = Combobox(root, values=options)
     combobox.set("Choose sheet")  # Ustawienie wartości domyślnej
     combobox.pack(pady=10)
-    button = Button(root, text="Zamknij", command=root.destroy, font=("Arial", 12))
+    button = Button(root, text="Close", command=root.destroy, font=("Arial", 12))
     button.pack(pady=10)
 
 
@@ -160,12 +160,12 @@ def add_combobox(root, options):
             should_break = True
             should_hide_windows = True
             result_window = Tk()
-            result_window.title("Wynik Analizy")
+            result_window.title("Outcome")
 
             label = Label(result_window, text=w, font=("Arial", 14), fg="green")
             label.pack(pady=20)
 
-            button = Button(result_window, text="Wyłącz program", command=sys.exit, font=("Arial", 12))
+            button = Button(result_window, text="Close", command=sys.exit, font=("Arial", 12))
             button.pack(pady=10)
 
             result_window.mainloop()
@@ -178,12 +178,12 @@ def add_combobox(root, options):
             root3.attributes("-topmost", True)
             root3.withdraw()
             label = Label(root3,
-                          text=f"Zaznaczono obszar: {selection.Address}\n ",
+                          text=f"Chosen range: {selection.Address}\n ",
                           font=("Arial", 16), fg="blue")
-            label2 = Label(root3, text="Wyłącz okno excela i kliknij przycisk, żeby zatwierdzić.",font=("Arial", 16), fg="red")
+            label2 = Label(root3, text="Close the Excel window and click the button to confirm.",font=("Arial", 16), fg="red")
             label.pack(pady=20)  # Ustawienie odstępu w pionie
             label2.pack(pady=20)
-            button = Button(root3, text="Zatwierdź", command=lambda:range_is_chosen(), font=("Arial", 14))
+            button = Button(root3, text="Confirm", command=lambda:range_is_chosen(), font=("Arial", 14))
             button.pack(pady=20)
             if should_hide_windows:
                 #print("Let's hide windows")
@@ -230,7 +230,7 @@ def add_combobox(root, options):
                     # if can_destroy_window:
                     #     root3.destroy()
                     selection = excel.Selection
-                    label["text"] = f"Zaznaczono obszar: {selection.Address}\n "
+                    label["text"] = f"Chosen range: {selection.Address}\n "
                     root3.deiconify()
                     #label["text"]=f"Zaznaczono obszar: {selection.Address}"
                     #print(f"Zaznaczono obszar: {selection.Address}")
@@ -270,7 +270,7 @@ def insert_file():
     global excel
     global sheet_names_only
     try:
-        file = filedialog.askopenfilename(title="Wybierz plik Excela",
+        file = filedialog.askopenfilename(title="Choose Excel file",
                                           filetypes=[("Excel Files", "*.xlsx *.xls *.xlsm")])
         if file:
             excel = win32com.client.DispatchWithEvents("Excel.Application", ExcelEventHandler)
@@ -282,7 +282,7 @@ def insert_file():
 
             # Tworzenie nowego okna do wyboru arkusza
             root2 = Tk()
-            root2.title("Wybierz arkusz")
+            root2.title("Choose sheet")
             add_combobox(root2, sheet_names_only)
 
             # Poczekaj na wybór użytkownika, zanim przejdziesz dalej
